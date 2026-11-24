@@ -4073,8 +4073,8 @@
       grupos.get(b.parentElement).push(mel);
     });
     grupos.forEach((lista, grupo) => {
-      const quadro = grupo.closest(".categoria-loja");
-      if (quadro && quadro.matches(":hover")) return;
+      // logo depois de comprar, espera um tiquinho para o card não fugir do dedo/mouse no meio de cliques seguidos
+      if (Date.now() - ultimoCliqueLoja < 450) return;
       const chave = (mel) => qtd[mel.id] >= mel.max ? Infinity : preco(mel.id);
       const ordem = lista.map((mel, i) => ({ mel, i, k: chave(mel) }))
         .sort((a, b) => a.k - b.k || a.i - b.i)
@@ -4101,8 +4101,12 @@
       });
     });
   }
-  // quando o mouse sai de uma caixinha, ela se arruma na hora
-  document.querySelectorAll(".loja-coluna .categoria-loja").forEach((q) => q.addEventListener("mouseleave", () => requestAnimationFrame(ordenarLoja)));
+  // a loja se arruma sozinha (não espera mais o mouse sair da caixinha); só dá uma pausinha logo depois de um clique
+  var ultimoCliqueLoja = 0;
+  document.querySelectorAll(".loja-coluna").forEach((c) => c.addEventListener("pointerdown", () => {
+    ultimoCliqueLoja = Date.now();
+    setTimeout(ordenarLoja, 500);
+  }));
 
   // ===== Efeito visual do "+N" =====
   function mostrarFlutuante(x, y, texto, extraClasse) {
