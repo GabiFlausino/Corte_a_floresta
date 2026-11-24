@@ -2703,7 +2703,7 @@
     ["lunar_u5", 5, "🌙", "Ovo Lunar", 100], ["planetario_u5", 5, "🪐", "Ovo Planetário", 400], ["galactico_u5", 5, "🌌", "Ovo Galáctico", 1500],
   ].map(([id, universo, emoji, nome, preco], i) => ({ id, universo, emoji, nome, n: (i % 3) + 1,
     preco: Math.round(preco * Math.pow(1.2, universo - 1)), chances: [50, 27, 14, 6.5, 2, 0.5] }));
-  const FOLHA_OVOS = { 1: "artes/ovos1.webp", 2: "artes/ovos2.webp" };   // (os outros universos ainda usam emoji)
+  const FOLHA_OVOS = { 1: "ovos1.webp", 2: "ovos2.webp" };   // (os outros universos ainda usam emoji)
 
   function qtdPet(id, n) { return (PETS.tem[id] || [])[n - 1] || 0; }
   function nivelPet(id) { for (let n = NIVEL_MAX_PET; n >= 1; n--) if (qtdPet(id, n) > 0) return n; return 0; }
@@ -2726,7 +2726,7 @@
     let dentro;
     if (PET_COM_ARTE.has(pet.id) && pet.universo <= 3) {
       const col = pet.celula % 6, lin = Math.floor(pet.celula / 6);
-      dentro = '<div class="desenho" style="width:' + tam + "px;height:" + tam + "px;background-image:url(artes/pets" + pet.universo + ".webp);background-size:" +
+      dentro = '<div class="desenho" style="width:' + tam + "px;height:" + tam + "px;background-image:url(pets" + pet.universo + ".webp);background-size:" +
         (tam * 6) + "px " + (tam * 4) + "px;background-position:-" + (col * tam) + "px -" + (lin * tam) + 'px"></div>';
     } else {
       dentro = '<span class="emoji" style="font-size:' + Math.round(tam * 0.62) + 'px">' + pet.emoji + "</span>";
@@ -3173,7 +3173,7 @@
     });
   });
   // fundo pintado de cada mundo (e do lobby de cada universo)
-  function urlFundo(nome) { return "artes/fundo_" + nome + ".webp"; }
+  function urlFundo(nome) { return "fundo_" + nome + ".webp"; }
   const NS_SVG = "http://www.w3.org/2000/svg";
   function novoSvg(tag, atributos) {
     const el = document.createElementNS(NS_SVG, tag);
@@ -3188,7 +3188,7 @@
       const velho = document.getElementById(id);
       if (velho) velho.remove();
       const simbolo = novoSvg("symbol", { id, viewBox: x + " " + y + " " + w + " " + h });
-      simbolo.appendChild(novoSvg("image", { href: "artes/" + arq + ".webp", width: fw, height: fh }));
+      simbolo.appendChild(novoSvg("image", { href: "" + arq + ".webp", width: fw, height: fh }));
       defs.appendChild(simbolo);
     }
   }
@@ -4959,7 +4959,7 @@
     filtro.appendChild(novoSvg("feColorMatrix", { type: "matrix", values: r + " 0 0 0 0  0 " + g + " 0 0 0  0 0 " + b + " 0 0  0 0 0 1 0" }));
     defs.appendChild(filtro);
     const simbolo = novoSvg("symbol", { id: "esp-" + a.id, viewBox: "0 0 " + w + " " + h });
-    const href = "artes/" + arq + ".webp";
+    const href = "" + arq + ".webp";
     simbolo.appendChild(novoSvg("image", { href, x: -tx, y: -ty, width: fw, height: fh, "clip-path": "url(#corte-" + w + ")" }));
     simbolo.appendChild(novoSvg("image", { href, x: -cx, y: -cy, width: fw, height: fh, filter: "url(#tinta-" + a.id + ")", "clip-path": "url(#corte-" + w + ")" }));
     defs.appendChild(simbolo);
