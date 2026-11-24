@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Corte a Floresta</title>
 <meta name="theme-color" content="#3f7a2e">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1580,6 +1580,102 @@
     .loja-coluna .categoria-conteudo { scrollbar-color: #b5763a rgba(122, 74, 34, 0.15); }
   }
 
+  /* ---------- Caixa das duas lojas: no computador ela "some" e cada loja vira uma coluna ---------- */
+  #lojas { display: contents; }
+  #loja-esq { order: -1; }
+
+  /* ---------- CELULAR E TABLET: árvore em cima (parada) e melhorias embaixo (rolam sozinhas) ---------- */
+  @media (max-width: 1100px) {
+    #tela-jogo:not([hidden]) {
+      position: fixed; inset: 0; z-index: 5;
+      display: flex !important; flex-direction: column; align-items: stretch !important;
+      margin: 0 !important; padding: 6px 8px 0 !important; gap: 6px;
+      height: 100vh; height: 100dvh; max-width: none !important; box-sizing: border-box; overflow: hidden;
+    }
+    #painel-esquerdo {
+      position: relative !important; top: auto !important;
+      flex: 0 0 auto; height: 50vh !important; height: 50dvh !important;
+    }
+    #painel-esquerdo #topo-jogo { margin-bottom: 4px !important; }
+    #topo-jogo .btn-simples { padding: 4px 10px; font-size: 0.85rem; }
+    #placar { padding: 0 10px 6px !important; margin-bottom: 0 !important; max-width: 560px !important; }
+    #placar #titulo-mundo { font-size: 1.15rem !important; padding: 6px 8px !important; margin-bottom: 4px !important; }
+    #placar #nome-mundo { display: none; }
+    #placar #meta-texto, #placar #info, #placar #info-gemas { font-size: 0.78rem; margin: 2px 0 !important; }
+    #placar #madeira { font-size: 1.4rem; margin: 2px 0; display: inline-flex; align-items: center; gap: 4px; }
+    #placar #madeira svg, #placar #madeira img { width: 1.5em; height: 1.5em; }
+    #placar #cronometro { font-size: 0.75rem; padding: 2px 8px; margin: 2px 0 0; }
+    .area-arvore { padding-bottom: 6px !important; }
+    #lojas {
+      display: flex; flex-direction: column; gap: 10px;
+      flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      padding: 4px 2px 16px; margin: 0 -2px;
+      border-top: 3px solid var(--contorno); border-radius: 14px 14px 0 0;
+      background: rgba(43, 26, 14, 0.35);
+    }
+    #lojas .loja-coluna { gap: 10px; }
+    #lojas #loja { order: 0; } #lojas #loja-esq { order: 1; }   /* melhorias de clique primeiro */
+    #lojas .categoria-titulo { font-size: 1.05rem; padding-top: 6px; padding-bottom: 6px; }
+    #lojas .categoria-conteudo { gap: 8px !important; padding: 8px !important; }
+    #lojas .upgrade { min-height: 0 !important; }
+    #lojas .upgrade .icone { flex-basis: 52px !important; font-size: 1.6rem !important; }
+    #lojas .upgrade .icone svg, #lojas .upgrade .icone img { max-width: 40px; max-height: 40px; }
+    #lojas .upgrade .texto { padding: 6px 10px !important; }
+    #lojas .upgrade .nome { font-size: 0.95rem !important; }
+    #lojas .upgrade .desc, #lojas .upgrade .efeito { font-size: 0.78rem !important; }
+    .partida-titulo { font-size: 1.25rem !important; padding-right: 36px; }
+  }
+  /* tablet: as duas lojas lado a lado embaixo da árvore */
+  @media (max-width: 1100px) and (min-width: 801px) {
+    #lojas { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
+    #lojas #loja-esq { order: 0; } #lojas #loja { order: 1; }
+  }
+
+  /* ---------- CELULAR/TABLET DEITADO: igual ao Roblox — melhorias nos dois lados, árvore e progresso no meio ---------- */
+  @media (max-width: 1100px) and (orientation: landscape) {
+    #tela-jogo:not([hidden]) {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) minmax(230px, 36%) minmax(0, 1fr) !important;
+      grid-template-rows: minmax(0, 1fr);
+      gap: 6px; align-items: stretch !important;
+      padding: 4px max(4px, env(safe-area-inset-right)) 0 max(4px, env(safe-area-inset-left)) !important;
+    }
+    #lojas { display: contents !important; }
+    #loja-esq { grid-column: 1; grid-row: 1; }
+    #painel-esquerdo { grid-column: 2; grid-row: 1; height: auto !important; min-height: 0; }
+    #loja { grid-column: 3; grid-row: 1; }
+    #lojas .loja-coluna {
+      height: 100%; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+      gap: 6px !important; padding-bottom: 10px; box-sizing: border-box;
+    }
+    #lojas .categoria-titulo { font-size: 0.9rem; padding-top: 4px; padding-bottom: 4px; }
+    #lojas .categoria-loja { flex-shrink: 0; }
+    #lojas .upgrade .custo { font-size: 0.8rem !important; }
+    #lojas .upgrade .linha1 { gap: 1px 4px !important; }
+    #lojas .categoria-conteudo { gap: 6px !important; padding: 6px !important; }
+    #lojas .upgrade .icone { flex-basis: 40px !important; font-size: 1.25rem !important; }
+    #lojas .upgrade .icone svg, #lojas .upgrade .icone img { max-width: 32px; max-height: 32px; }
+    #lojas .upgrade .texto { padding: 4px 6px !important; }
+    #lojas .upgrade .nome { font-size: 0.82rem !important; }
+    #lojas .upgrade .desc, #lojas .upgrade .efeito { font-size: 0.7rem !important; }
+    #lojas .upgrade .nivel { font-size: 0.62rem !important; }
+    #painel-esquerdo #topo-jogo { margin-bottom: 4px !important; }
+    #placar #meta-texto { display: none; }
+    #placar #info-gemas, #placar #cronometro { display: inline-block; }
+    #placar #titulo-mundo { font-size: 1rem !important; }
+  }
+  /* tablet deitado tem mais espaço: cards um pouco maiores */
+  @media (max-width: 1100px) and (orientation: landscape) and (min-height: 601px) {
+    #lojas .upgrade .nome { font-size: 0.95rem !important; }
+    #lojas .upgrade .desc, #lojas .upgrade .efeito { font-size: 0.8rem !important; }
+    #lojas .upgrade .icone { flex-basis: 52px !important; font-size: 1.6rem !important; }
+    #lojas .upgrade .custo { font-size: 0.95rem !important; }
+    #placar #meta-texto { display: block; }
+  }
+  .config-deitado { display: none; }
+  @media (pointer: coarse) { .config-deitado { display: block; } }
+
   /* Avisos e quadros flutuantes com a mesma moldura */
   #aviso-missao, #rotulo-especial, .isca, .chip-bonus {
     border-color: var(--contorno) !important;
@@ -1617,7 +1713,7 @@
   .btn-universo:not(.atual):hover { filter: brightness(1.08); }
   .btn-universo .bu-req { margin-left: 6px; }
   /* celular: os 5 universos lado a lado, em quadradinhos (ícone em cima, nome e o que falta embaixo) */
-  @media (max-width: 800px) {
+  @media (max-width: 800px), (orientation: landscape) and (max-height: 500px) {
     .universos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; max-width: 460px; margin: 6px auto 12px; }
     .btn-universo { padding: 5px 2px; font-size: 0.72rem; border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 1px; line-height: 1.1; min-width: 0; }
     .btn-universo .bu-icone { font-size: 1.35rem; }
@@ -1903,19 +1999,6 @@
   </div>
 
   <div id="tela-jogo" hidden>
-  <!-- Coluna da esquerda: fábricas e melhorias especiais -->
-  <div id="loja-esq" class="loja-coluna">
-    <details class="categoria-loja" open>
-      <summary class="categoria-titulo">🏭 Fábricas</summary>
-      <div class="categoria-conteudo" id="grupo-fabricas"></div>
-    </details>
-
-    <details class="categoria-loja" open>
-      <summary class="categoria-titulo">⚙️ Melhorias especiais</summary>
-      <div class="categoria-conteudo" id="grupo-especiais"></div>
-    </details>
-  </div>
-
   <!-- Meio: título, progresso e a árvore (fica parado na tela) -->
   <div id="painel-esquerdo">
   <div id="topo-jogo"><span><button class="btn-simples" id="btn-lobby">← Lobby</button> <span class="menu menu-jogo"><button class="btn-simples btn-menu" aria-label="Menu">☰</button><span class="menu-lista" hidden><button class="btn-simples" id="btn-recordes-jogo">🏅 Recordes</button><button class="btn-simples" id="btn-config-jogo">⚙️ Configurações</button></span></span></span><span id="aviso-salvo">💾 Partida salva</span></div>
@@ -1938,6 +2021,22 @@
   </div>
   </div>
 
+  <!-- As duas colunas de melhorias. No computador ficam uma de cada lado da árvore;
+       no celular ficam juntas embaixo da árvore, numa parte que rola sozinha. -->
+  <div id="lojas">
+  <!-- Coluna da esquerda: fábricas e melhorias especiais -->
+  <div id="loja-esq" class="loja-coluna">
+    <details class="categoria-loja" open>
+      <summary class="categoria-titulo">🏭 Fábricas</summary>
+      <div class="categoria-conteudo" id="grupo-fabricas"></div>
+    </details>
+
+    <details class="categoria-loja" open>
+      <summary class="categoria-titulo">⚙️ Melhorias especiais</summary>
+      <div class="categoria-conteudo" id="grupo-especiais"></div>
+    </details>
+  </div>
+
   <!-- Coluna da direita: melhorias de clique e trabalhadores (os cards são montados pelo JavaScript) -->
   <div id="loja" class="loja-coluna">
     <details class="categoria-loja" open>
@@ -1950,6 +2049,7 @@
       <div class="categoria-conteudo" id="grupo-trabalhadores"></div>
     </details>
 
+  </div>
   </div>
   </div>
 
@@ -1973,6 +2073,9 @@
       <div class="config-item">
         <label class="config-linha"><span>🪓 Efeitos sonoros</span><input type="checkbox" id="cfg-efeitos" class="chave"></label>
         <label class="config-volume">Volume <input type="range" id="cfg-vol-efeitos" min="0" max="100"> <span id="cfg-vol-efeitos-txt"></span></label>
+      </div>
+      <div class="config-item config-deitado">
+        <label class="config-linha"><span>📱 Jogar deitado</span><input type="checkbox" id="cfg-deitado" class="chave"></label>
       </div>
       <button class="btn-simples btn-forte" id="btn-fechar-config">Fechar</button>
     </div>
@@ -4390,6 +4493,7 @@
     const acao = botao.dataset.acao;
     const aviso = document.getElementById("partida-aviso");
     if (acao === "voltar") { elJanelaPartida.hidden = true; return; }
+    if (acao !== "nova") deitarCelular();   // ao começar a jogar, volta a ficar deitado (se a pessoa saiu da tela cheia)
     if (acao === "nova" && (aviso.hidden || confirmandoExcluir)) {        // primeiro clique só avisa
       confirmandoExcluir = false;
       const bx = document.getElementById("b-excluir"); if (bx) bx.textContent = "🗑️ Excluir";
@@ -5706,7 +5810,7 @@
 
   // ----- Configurações (ficam salvas no navegador) -----
   const CHAVE_CONFIG = "corteAFloresta.config";
-  let config = { musica: true, volMusica: 40, efeitos: true, volEfeitos: 70 };
+  let config = { musica: true, volMusica: 40, efeitos: true, volEfeitos: 70, deitado: true };
   try { config = Object.assign(config, JSON.parse(localStorage.getItem(CHAVE_CONFIG) || "{}")); } catch (e) {}
   function salvarConfig() {
     try { localStorage.setItem(CHAVE_CONFIG, JSON.stringify(config)); } catch (e) {}
@@ -6268,6 +6372,7 @@
     cfgVolMusica.value = config.volMusica;
     cfgEfeitos.checked = config.efeitos;
     cfgVolEfeitos.value = config.volEfeitos;
+    document.getElementById("cfg-deitado").checked = config.deitado;
     document.getElementById("cfg-vol-musica-txt").textContent = config.volMusica + "%";
     document.getElementById("cfg-vol-efeitos-txt").textContent = config.volEfeitos + "%";
     // o volume fica apagadinho quando aquele som está desligado
@@ -6281,13 +6386,39 @@
     config.volMusica = Number(cfgVolMusica.value);
     config.efeitos = cfgEfeitos.checked;
     config.volEfeitos = Number(cfgVolEfeitos.value);
+    const deitadoAntes = config.deitado;
+    config.deitado = document.getElementById("cfg-deitado").checked;
     salvarConfig();
+    if (config.deitado && !deitadoAntes) deitarCelular();
+    if (!config.deitado && deitadoAntes) endireitarCelular();
     prepararAudio();
     if (config.musica) ligarMusica(); else desligarMusica();
     aplicarVolumes();
     mostrarConfig();
   }
-  [cfgMusica, cfgVolMusica, cfgEfeitos, cfgVolEfeitos].forEach((el) => el.addEventListener("input", mudouConfig));
+  [cfgMusica, cfgVolMusica, cfgEfeitos, cfgVolEfeitos, document.getElementById("cfg-deitado")].forEach((el) => el.addEventListener("input", mudouConfig));
+
+  // ----- Celular deitado -----
+  // No Android: entra em tela cheia e trava a tela deitada.
+  // (O iPhone não deixa um site travar a tela; lá é só virar o celular com a rotação destravada.)
+  const ehCelular = window.matchMedia("(pointer: coarse)").matches;
+  function deitarCelular() {
+    if (!ehCelular || !config.deitado) return;
+    const travar = () => { try { screen.orientation.lock("landscape").catch(() => {}); } catch (e) {} };
+    const el = document.documentElement;
+    if (!document.fullscreenElement && el.requestFullscreen) {
+      el.requestFullscreen({ navigationUI: "hide" }).then(travar).catch(travar);
+    } else travar();
+  }
+  function endireitarCelular() {
+    try { screen.orientation.unlock(); } catch (e) {}
+    if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+  }
+  // primeiro toque na tela já deita o jogo
+  document.addEventListener("pointerdown", function primeiroToque() {
+    document.removeEventListener("pointerdown", primeiroToque);
+    deitarCelular();
+  });
   // ao soltar o volume dos efeitos, toca um "toc" para a pessoa ouvir como ficou
   cfgVolEfeitos.addEventListener("change", somCorte);
 
