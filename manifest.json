@@ -1,0 +1,14 @@
+{
+  "name": "Corte a Floresta",
+  "short_name": "Corte a Floresta",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#6cc0f7",
+  "theme_color": "#3f7a2e",
+  "icons": [
+    { "src": "icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
