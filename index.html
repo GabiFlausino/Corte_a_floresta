@@ -1684,6 +1684,7 @@
   .config-deitado { display: none; }
   @media (pointer: coarse) { .config-deitado { display: block; } }
 
+  #btn-auto-jogo.auto-ligado { background: linear-gradient(#7fd36b, #4a9e3c) !important; color: #fff; }
   /* Avisos e quadros flutuantes com a mesma moldura */
   #aviso-missao, #rotulo-especial, .isca, .chip-bonus {
     border-color: var(--contorno) !important;
@@ -2009,7 +2010,7 @@
   <div id="tela-jogo" hidden>
   <!-- Meio: título, progresso e a árvore (fica parado na tela) -->
   <div id="painel-esquerdo">
-  <div id="topo-jogo"><span><button class="btn-simples" id="btn-lobby">← Lobby</button> <span class="menu menu-jogo"><button class="btn-simples btn-menu" aria-label="Menu">☰</button><span class="menu-lista" hidden><button class="btn-simples" id="btn-recordes-jogo">🏅 Recordes</button><button class="btn-simples" id="btn-config-jogo">⚙️ Configurações</button></span></span></span><span id="aviso-salvo">💾 Partida salva</span></div>
+  <div id="topo-jogo"><span><button class="btn-simples" id="btn-lobby">← Lobby</button> <span class="menu menu-jogo"><button class="btn-simples btn-menu" aria-label="Menu">☰</button><span class="menu-lista" hidden><button class="btn-simples" id="btn-recordes-jogo">🏅 Recordes</button><button class="btn-simples" id="btn-config-jogo">⚙️ Configurações</button></span></span> <button class="btn-simples" id="btn-auto-jogo" title="Autoclicker">🤖</button></span><span id="aviso-salvo">💾 Partida salva</span></div>
   <div id="painel-centro">
   <div id="placar">
   <h1 id="titulo-mundo"></h1>
@@ -3082,6 +3083,19 @@
       salvarConta(); somCompra(true); montarLojaGemas();
     }
   });
+  // Botão 🤖 na partida: liga e desliga o autoclicker sem sair do jogo
+  const btnAutoJogo = document.getElementById("btn-auto-jogo");
+  function mostrarBotaoAuto() {
+    btnAutoJogo.classList.toggle("auto-ligado", passeAtivo("auto"));
+    btnAutoJogo.textContent = passeAtivo("auto") ? "🤖 Auto ✅" : "🤖 Auto";
+  }
+  btnAutoJogo.addEventListener("click", () => {
+    passes.auto = !passes.auto;
+    try { localStorage.setItem(CHAVE_PASSES, JSON.stringify(passes)); } catch (er) {}
+    mostrarBotaoAuto();
+  });
+  mostrarBotaoAuto();
+  document.getElementById("pagina-lojagemas").addEventListener("click", () => setTimeout(mostrarBotaoAuto, 0));
   // Autoclicker: 20 cliques por segundo no meio da árvore, só durante a partida
   setInterval(() => {
     if (!passeAtivo("auto") || !jogoAtivo || document.hidden || telaJogo.hidden) return;
