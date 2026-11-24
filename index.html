@@ -21,7 +21,6 @@
   body.pintado #ceu, body.pintado #horizonte, body.pintado #grama, body.pintado #vegetacao { display: none; }
   /* no lobby, os cartões dos mundos mostram um pedaço do fundo do mundo */
   .mundo-icone { background-size: cover !important; background-position: center !important; }
-  @media (max-width: 800px) { .universos { gap: 6px; } .btn-universo { padding: 6px 10px; font-size: 0.85rem; } }
   /* ===== Mascotes ===== */
   .pets-grade { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
   .ovos-grade { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
@@ -1616,6 +1615,14 @@
   .btn-universo.atual { background: var(--veios), linear-gradient(#8fd05a, #5c9a2f); transform: translateY(2px); box-shadow: inset 0 3px 6px rgba(0,0,0,0.25), 0 2px 0 var(--contorno); }
   body.u2 .btn-universo.atual { background: var(--veios), linear-gradient(#9aa3b5, #5e6678); }
   .btn-universo:not(.atual):hover { filter: brightness(1.08); }
+  .btn-universo .bu-req { margin-left: 6px; }
+  /* celular: os 5 universos lado a lado, em quadradinhos (ícone em cima, nome e o que falta embaixo) */
+  @media (max-width: 800px) {
+    .universos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; max-width: 460px; margin: 6px auto 12px; }
+    .btn-universo { padding: 5px 2px; font-size: 0.72rem; border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 1px; line-height: 1.1; min-width: 0; }
+    .btn-universo .bu-icone { font-size: 1.35rem; }
+    .btn-universo .bu-req { margin: 0; font-size: 0.62rem; white-space: nowrap; }
+  }
 </style>
 </head>
 <body>
@@ -6293,13 +6300,13 @@
 
   // ===== Trocar de universo =====
   document.querySelector(".universos").innerHTML = UNIVERSOS_INFO.map((x) =>
-    '<button class="btn-universo" data-u="' + x.u + '">' + x.icone + " " + x.nome + "</button>").join("");
+    '<button class="btn-universo" data-u="' + x.u + '"><span class="bu-icone">' + x.icone + '</span> <span class="bu-nome">' + x.nome + '</span><span class="bu-req"></span></button>').join("");
   document.querySelectorAll(".btn-universo").forEach((b) => {
     const u = Number(b.dataset.u), info = UNIVERSOS_INFO[u - 1];
     if (u === UNIVERSO) b.classList.add("atual");
     const trancado = !universoLiberado(u);
     const feitos = u > 1 ? Math.min(renascNo(u - 1), info.precisa) : 0;
-    if (trancado) { b.classList.add("trancado"); b.textContent = "🔒 " + info.nome + " · 🔁 " + feitos + "/" + info.precisa; }
+    if (trancado) { b.classList.add("trancado"); b.querySelector(".bu-icone").textContent = "🔒"; b.querySelector(".bu-req").textContent = "🔁 " + feitos + "/" + info.precisa; }
     b.title = "Universo " + u + " · " + info.nome;
     b.addEventListener("click", () => {
       if (u === UNIVERSO) return;

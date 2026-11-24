@@ -1,6 +1,6 @@
 // Guarda o jogo no aparelho para funcionar sem internet.
 // Quando o jogo mudar, troque o número da versão para os aparelhos baixarem a nova.
-const VERSAO = "corte-a-floresta-v6";
+const VERSAO = "corte-a-floresta-v7";
 const ARQUIVOS = ["./", "./index.html", "./manifest.json", "./icone-192.png", "./icone-512.png",
   "./algas.webp",
   "./algas_especiais.webp",
