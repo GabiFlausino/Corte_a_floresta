@@ -2,6 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="color-scheme" content="only light">
+<meta name="darkreader-lock">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Corte a Floresta</title>
 <meta name="theme-color" content="#3f7a2e">
@@ -20,6 +22,8 @@
   }
   /* o fundo pintado fica atrás de tudo; o body fica transparente para não cobrir ele
      (alguns celulares, principalmente em tela cheia, pintavam o azul do body por cima) */
+  /* o jogo é sempre claro: pede para o celular não escurecer as cores no "modo escuro" */
+  :root { color-scheme: only light; }
   html { background: #6cc0f7; }
   body.pintado { background: transparent !important; }
   body.pintado #ceu, body.pintado #horizonte, body.pintado #grama, body.pintado #vegetacao { display: none; }
