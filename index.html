@@ -15,9 +15,13 @@
   /* ===== Versão offline: fonte embutida + ajustes para celular ===== */
   /* fundo pintado (lobby de cada universo e cada mundo), por cima do céu e da grama antigos */
   #fundo-pintado {
-    position: fixed; inset: 0; z-index: -1; pointer-events: none;
-    background: center bottom / cover no-repeat;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
+    background-position: center bottom; background-size: cover; background-repeat: no-repeat;
   }
+  /* o fundo pintado fica atrás de tudo; o body fica transparente para não cobrir ele
+     (alguns celulares, principalmente em tela cheia, pintavam o azul do body por cima) */
+  html { background: #6cc0f7; }
+  body.pintado { background: transparent !important; }
   body.pintado #ceu, body.pintado #horizonte, body.pintado #grama, body.pintado #vegetacao { display: none; }
   /* no lobby, os cartões dos mundos mostram um pedaço do fundo do mundo */
   .mundo-icone { background-size: cover !important; background-position: center !important; }
@@ -44,7 +48,7 @@
   .fusao { display: flex; align-items: center; gap: 10px; background: #fff8ea; border: 3px solid var(--contorno); border-radius: 14px; padding: 8px 12px; text-align: left; }
   .fusao div { flex: 1; font-size: 0.9rem; }
   /* janela do ovo */
-  #janela-ovo { position: fixed; inset: 0; z-index: 60; background: rgba(20, 12, 4, 0.72); display: grid; place-items: center; padding: 16px; }
+  #janela-ovo { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 60; background: rgba(20, 12, 4, 0.72); display: grid; place-items: center; padding: 16px; }
   #janela-ovo[hidden] { display: none; }
   .jo-caixa { background: #f3e3c3; border: 5px solid var(--contorno); border-radius: 22px; padding: 20px; width: min(760px, 100%); max-height: 92vh; overflow: auto; text-align: center; box-shadow: 0 8px 0 var(--contorno); }
   .jo-caixa h2 { margin: 0 0 4px; }
@@ -377,7 +381,7 @@
 
   /* ----- Aviso de mundo concluído ----- */
   #fim {
-    position: fixed; inset: 0; z-index: 10;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10;
     display: flex; align-items: center; justify-content: center;
     background: rgba(0,0,0,0.5); padding: 16px;
   }
@@ -679,7 +683,7 @@
   @keyframes correr { from { left: 105%; } to { left: -10%; } }
   .voador.folha { font-size: 1.8rem; pointer-events: none; animation-name: soprar; }
   @keyframes soprar { from { left: -5%; transform: rotate(0); } to { left: 105%; transform: rotate(720deg); } }
-  .chuva { position: fixed; inset: 0; z-index: 11; pointer-events: none; overflow: hidden; }
+  .chuva { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 11; pointer-events: none; overflow: hidden; }
   .chuva i {
     position: absolute; top: -10%; width: 2px; height: 18px; border-radius: 2px;
     background: linear-gradient(transparent, rgba(120, 180, 255, 0.85));
@@ -744,7 +748,7 @@
 
   /* ----- Janela de partida salva ----- */
   .janela {
-    position: fixed; inset: 0; z-index: 10;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10;
     display: flex; align-items: center; justify-content: center;
     background: rgba(0,0,0,0.5); padding: 16px;
   }
@@ -1587,7 +1591,7 @@
   /* ---------- CELULAR E TABLET: árvore em cima (parada) e melhorias embaixo (rolam sozinhas) ---------- */
   @media (max-width: 1100px) {
     #tela-jogo:not([hidden]) {
-      position: fixed; inset: 0; z-index: 5;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 5;
       display: flex !important; flex-direction: column; align-items: stretch !important;
       margin: 0 !important; padding: 6px 8px 0 !important; gap: 6px;
       height: 100vh; height: 100dvh; max-width: none !important; box-sizing: border-box; overflow: hidden;
