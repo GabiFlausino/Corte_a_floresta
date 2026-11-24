@@ -1,6 +1,6 @@
 // Guarda o jogo no aparelho para funcionar sem internet.
 // Quando o jogo mudar, troque o número da versão para os aparelhos baixarem a nova.
-const VERSAO = "corte-a-floresta-v16";
+const VERSAO = "corte-a-floresta-v17";
 const ARQUIVOS = ["./", "./index.html", "./manifest.json", "./icone-192.png", "./icone-512.png",
   "./algas.webp",
   "./algas_especiais.webp",
@@ -62,7 +62,8 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
   e.respondWith(
-    fetch(e.request).then((r) => {
+    // "no-cache": sempre confere com o site se tem versão nova (em vez de usar a cópia guardada pelo navegador)
+    fetch(e.request, { cache: "no-cache" }).then((r) => {
       const copia = r.clone();
       caches.open(VERSAO).then((c) => c.put(e.request, copia));
       return r;
