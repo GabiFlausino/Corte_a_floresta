@@ -1685,6 +1685,8 @@
   @media (pointer: coarse) { .config-deitado { display: block; } }
 
   #btn-auto-jogo.auto-ligado { background: linear-gradient(#7fd36b, #4a9e3c) !important; color: #fff; }
+  #versao-jogo { position: fixed; left: 6px; bottom: 6px; z-index: 50; font-size: 0.7rem; color: #fff; background: rgba(40,25,12,.7); padding: 1px 7px; border-radius: 8px;
+    text-shadow: 0 1px 2px rgba(0,0,0,.7); pointer-events: none; }
   /* Avisos e quadros flutuantes com a mesma moldura */
   #aviso-missao, #rotulo-especial, .isca, .chip-bonus {
     border-color: var(--contorno) !important;
@@ -1788,6 +1790,7 @@
   <div id="tela-lobby">
     <!-- ⚠️ TEMPORÁRIO, SÓ PARA TESTES: apagar este botão (e o código "MODO TESTE") antes da versão final -->
     <button class="btn-resetar" id="btn-resetar">🗑️ Resetar</button>
+    <div id="versao-jogo">versão 16</div>
     <div class="botoes-topo">
       <div class="menu">
         <button class="btn-simples btn-menu" aria-label="Menu">☰</button>
