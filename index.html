@@ -1687,6 +1687,38 @@
   #btn-auto-jogo.auto-ligado { background: linear-gradient(#7fd36b, #4a9e3c) !important; color: #fff; }
   #versao-jogo { position: fixed; left: 6px; bottom: 6px; z-index: 50; font-size: 0.7rem; color: #fff; background: rgba(40,25,12,.7); padding: 1px 7px; border-radius: 8px;
     text-shadow: 0 1px 2px rgba(0,0,0,.7); pointer-events: none; }
+  /* ---------- Cards de melhoria mais baixinhos no celular e no tablet ---------- */
+  @media (max-width: 1100px) {
+    #lojas .upgrade { gap: 6px; }
+    #lojas .upgrade .icone { flex: 0 0 44px !important; flex-basis: 44px !important; font-size: 1.35rem !important; border-radius: 9px; }
+    #lojas .upgrade .icone svg, #lojas .upgrade .icone img { max-width: 30px; max-height: 30px; }
+    #lojas .upgrade .texto { padding: 4px 8px 5px !important; gap: 0 !important; border-radius: 9px; }
+    #lojas .upgrade .linha1 { align-items: center !important; gap: 6px !important; flex-wrap: nowrap !important; }
+    #lojas .upgrade .linha1 { align-items: flex-start !important; }
+    #lojas .upgrade .nome { font-size: 0.86rem !important; line-height: 1.15; min-width: 0; }   /* nome comprido pode quebrar em 2 linhas */
+    #lojas .upgrade .nivel { flex: 0 0 auto; white-space: nowrap; margin-top: 1px; }
+    #lojas .upgrade .nivel { font-size: 0.62rem !important; padding: 0 6px !important; line-height: 1.5; }
+    #lojas .upgrade .efeito { font-size: 0.7rem !important; line-height: 1.2; }
+    #lojas .upgrade .custo { font-size: 0.8rem !important; line-height: 1.25; }
+    #lojas .categoria-conteudo { gap: 6px !important; padding: 6px !important; }
+  }
+  /* ---------- Celular deitado: quadros das melhorias (Fábricas, Especiais...) mais enxutos ---------- */
+  @media (max-width: 1100px) and (orientation: landscape) and (max-height: 600px) {
+    #tela-jogo:not([hidden]) { grid-template-columns: minmax(0, 29%) minmax(230px, 42%) minmax(0, 29%) !important; gap: 5px; }
+    #lojas .loja-coluna { gap: 5px !important; }
+    #lojas .categoria-loja { border-width: 3px !important; border-radius: 12px !important; }
+    #lojas .categoria-titulo { font-size: 0.78rem !important; padding: 3px 8px !important; min-height: 0 !important; line-height: 1.3;
+      border-bottom-width: 3px !important; margin-bottom: 4px !important; }
+    #lojas .categoria-titulo::after { width: 20px !important; height: 20px !important; font-size: 0.9rem; border-radius: 6px !important; }
+    #lojas .categoria-conteudo { gap: 5px !important; padding: 4px 5px 6px !important; }
+    #lojas .upgrade { gap: 4px !important; }
+    #lojas .upgrade .icone { flex: 0 0 36px !important; flex-basis: 36px !important; font-size: 1.15rem !important; }
+    #lojas .upgrade .icone svg, #lojas .upgrade .icone img { max-width: 26px; max-height: 26px; }
+    #lojas .upgrade .texto { padding: 3px 6px 4px !important; }
+    #lojas .upgrade .nome { font-size: 0.8rem !important; }
+    #lojas .upgrade .efeito { font-size: 0.66rem !important; }
+    #lojas .upgrade .custo { font-size: 0.74rem !important; }
+  }
   /* Avisos e quadros flutuantes com a mesma moldura */
   #aviso-missao, #rotulo-especial, .isca, .chip-bonus {
     border-color: var(--contorno) !important;
@@ -1790,7 +1822,7 @@
   <div id="tela-lobby">
     <!-- ⚠️ TEMPORÁRIO, SÓ PARA TESTES: apagar este botão (e o código "MODO TESTE") antes da versão final -->
     <button class="btn-resetar" id="btn-resetar">🗑️ Resetar</button>
-    <div id="versao-jogo">versão 17</div>
+    <div id="versao-jogo">versão 19</div>
     <div class="botoes-topo">
       <div class="menu">
         <button class="btn-simples btn-menu" aria-label="Menu">☰</button>
@@ -4032,6 +4064,7 @@
   }
 
   // ===== Atualiza tudo que aparece na tela =====
+  var cardsCompactos = window.matchMedia("(max-width: 1100px)");
   function atualizarTela() {
     elMadeira.textContent = "🪵 " + fmtGanho(madeira);
     elInfo.textContent =
@@ -4040,7 +4073,10 @@
     MELHORIAS.forEach((mel) => {
       const botao = botoes[mel.id];
       const noMaximo = qtd[mel.id] >= mel.max;
-      botao.querySelector(".nivel").textContent = (mel.nivel ? "Nível " : "Você tem ") + qtd[mel.id] + (mel.max === Infinity ? "" : " / " + mel.max);
+      // no celular/tablet o texto fica curtinho ("Nv 1/25" ou "0/12") para caber o nome inteiro
+      botao.querySelector(".nivel").textContent = cardsCompactos.matches
+        ? (mel.nivel ? "Nv " : "") + qtd[mel.id] + (mel.max === Infinity ? "" : "/" + mel.max)
+        : (mel.nivel ? "Nível " : "Você tem ") + qtd[mel.id] + (mel.max === Infinity ? "" : " / " + mel.max);
       botao.querySelector(".efeito").textContent = textoEfeito(mel.id);
       botao.querySelector(".custo").textContent = noMaximo ? "⭐ Máximo!" : "🪵 " + fmt(preco(mel.id)) + " madeiras";
       botao.classList.toggle("maximo", noMaximo);
